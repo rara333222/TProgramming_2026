@@ -1,9 +1,7 @@
 // Вариант 28
-const a: number = 2.5;
-const b: number = 4.6;
 
 // Функция y(x) = sin((a+b*x)^3.5) / (1 + cos(lg(a+b*x)))
-export function y(x: number): number {
+export function y(a: number, b: number, x: number): number {
     const AplusBX = a + b * x;
     const power = Math.pow(AplusBX, 3.5);
     const verh = Math.sin(power);
@@ -11,36 +9,48 @@ export function y(x: number): number {
     return verh / niz;
 }
 
-// ЗАДАЧА А
-console.log("\nЗадача А");
-const xStart: number = 1.15;
-const xEnd: number = 3.05;
-const step: number = 0.38;
-const n: number = Math.floor((xEnd - xStart) / step) + 1;
+//Задача А
+export function taskA(a: number, b: number): { x: number[]; y: number[] } {
+    const xStart = 1.15;
+    const xEnd = 3.05;
+    const step = 0.38;
+    const n = Math.floor((xEnd - xStart) / step) + 1;
 
-const xArrayA: number[] = new Array(n);
-const yArrayA: number[] = new Array(n);
+    const xArr: number[] = new Array(n);
+    const yArr: number[] = new Array(n);
 
-for (let i: number = 0; i < n; i++) {
-    const x: number = xStart + i * step;
-    xArrayA[i] = x;
-    yArrayA[i] = y(x);
+    for (let i = 0; i < n; i++) {
+        const x = xStart + i * step;
+        xArr[i] = x;
+        yArr[i] = y(a, b, x);
+    }
+    return { x: xArr, y: yArr };
 }
 
-for (let i: number = 0; i < n; i++) {
-    console.log(`x = ${xArrayA[i].toFixed(3)} -> y = ${yArrayA[i].toFixed(6)}`);
+// Задача Б
+export function taskB(a: number, b: number): { x: number[]; y: number[] } {
+    const xPoints: number[] = [1.20, 1.36, 1.57, 1.93, 2.25];
+    const m = xPoints.length;
+    const xArr: number[] = new Array(m);
+    const yArr: number[] = new Array(m);
+
+    for (let i = 0; i < m; i++) {
+        xArr[i] = xPoints[i];
+        yArr[i] = y(a, b, xPoints[i]);
+    }
+    return { x: xArr, y: yArr };
 }
 
-// ЗАДАЧА Б
+
+// Проверка на табличных значениях
+console.log("Задача А");
+    const resA = taskA(2.5, 4.6);
+    for (let i = 0; i < resA.x.length; i++) {
+        console.log(`x = ${resA.x[i].toFixed(3)} -> y = ${resA.y[i].toFixed(6)}`);
+    }
+
 console.log("\nЗадача Б");
-const xArrayB: number[] = [1.20, 1.36, 1.57, 1.93, 2.25];
-const m: number = xArrayB.length;
-const yArrayB: number[] = new Array(m);
-
-for (let i: number = 0; i < m; i++) {
-    yArrayB[i] = y(xArrayB[i]);
-}
-
-for (let i: number = 0; i < m; i++) {
-    console.log(`x = ${xArrayB[i].toFixed(2)} -> y = ${yArrayB[i].toFixed(6)}`);
-}
+    const resB = taskB(2.5, 4.6);
+    for (let i = 0; i < resB.x.length; i++) {
+        console.log(`x = ${resB.x[i].toFixed(2)} -> y = ${resB.y[i].toFixed(6)}`);
+    }
