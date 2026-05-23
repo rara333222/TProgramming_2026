@@ -21,7 +21,7 @@ function generateRandomHero(): Hero {
     return createHero(type, name, hp, strength);
 }
 
-export function generateHeroes(count: number): Hero[] {
+function generateHeroes(count: number): Hero[] {
     if (count % 2 !== 0) {
         throw new Error("Количество героев должно быть чётным");
     }
@@ -86,7 +86,7 @@ export function runRound(players: Hero[]): Hero[] {
     return winners;
 }
 
-export class Game {
+class Game {
     private heroes: Hero[];
 
     constructor(heroes: Hero[]) { this.heroes = heroes; }
